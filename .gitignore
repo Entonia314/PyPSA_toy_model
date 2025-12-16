@@ -20,3 +20,6 @@ uv.lock
 data/*.csv
 data/*.h5
 data/*.pkl
+
+# Plots
+plots/*.png

@@ -1,6 +1,8 @@
 import pypsa
 import pandas as pd
+import matplotlib.pyplot as plt
 from config import techno_eco_df
+from plotting import plot_time_series
 
 # ---------------------------
 # Load time series
@@ -117,4 +119,30 @@ n.optimize(
 print(n.generators.p_nom_opt)
 print(n.stores.e_nom_opt)
 
-n.generators_t.p.plot()
+# Plot loads for 2020
+plot_time_series(
+    [load["load_MW"], n.generators_t.p["AT_solar"], n.generators_t.p["AT_wind_onshore"]],
+    title="Modelled Load for Austria (2020)",
+    ylabel="Power (MW)",
+    filename="plots/modelled_load_at.png"
+)
+
+# Plot loads of one example week
+week_start = '2020-06-01'
+week_end = '2020-06-07'
+plot_time_series(
+    [load["load_MW"].loc[week_start:week_end],
+     n.generators_t.p["AT_solar"].loc[week_start:week_end],
+     n.generators_t.p["AT_wind_onshore"].loc[week_start:week_end]],
+    title="Modelled Load for Austria (First Week of June 2020)",
+    ylabel="Power (MW)",
+    filename="plots/modelled_load_at_june_week.png"
+)
+
+# Plot state of charge for battery
+plot_time_series(
+    n.stores_t.e["AT_battery_energy"],
+    title="State of Charge for Battery Storage (2020)",
+    ylabel="Energy (MWh)",
+    filename="plots/battery_soc_at.png"
+)
