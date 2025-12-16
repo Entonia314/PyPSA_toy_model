@@ -16,3 +16,7 @@ uv.lock
 # OS
 .DS_Store
 
+# Data
+data/*.csv
+data/*.h5
+data/*.pkl
